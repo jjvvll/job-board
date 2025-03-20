@@ -12,7 +12,7 @@ class RadioButton extends Component
      * Create a new component instance.
      */
     public function __construct(
-        public array $category,
+        public array $options,
         public string $name,
     )
     {

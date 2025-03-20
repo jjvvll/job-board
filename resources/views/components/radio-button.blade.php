@@ -1,7 +1,16 @@
-@foreach  ($category as $key => $value)
+<div>
     <label for="{{$name}}"  class="mb-1 items-center flex">
-        <input type="radio" name="{{$name}}" value="{{$value}}"
-        @checked(request('experience') == $value)/>
-        <span class="ml-2">{{$key}}</span>
+        <input type="radio" name="{{$name}}" value=""
+        @checked(!request($name))/>
+        <span class="ml-2">All</span>
     </label>
-@endforeach
+
+    @foreach  ($options as $option)
+        <label for="{{$name}}"  class="mb-1 items-center flex">
+            <input type="radio" name="{{$name}}" value="{{$option}}"
+            @checked(request($name) == $option)/>
+            <span class="ml-2">{{ucfirst($option)}}</span>
+        </label>
+    @endforeach
+
+</div>
