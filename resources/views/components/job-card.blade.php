@@ -6,17 +6,23 @@
         </div>
     </div>
 
-    <div class="mb-4 flex items-center justify-between text-sm text-slate-500 items-center">
+    <div class="mb-4 flex justify-between text-sm text-slate-500 items-center">
         <div class = "flex space-x-4">
             <div>Company name</div>
             <div>{{$job->location}}</div>
         </div>
         <div class="flex space-x-1 text-xs">
             <x-tag>
-                {{ Str::ucfirst($job->experience)}}
+                <a href="{{route('jobs.index', ['experience' => $job->experience, 'category' => request('category'),
+                'search' => request('search'), 'max_salary' => request('max_salary'), 'min_salary' => request('min_salary')])}}">
+                    {{ Str::ucfirst($job->experience)}}
+                </a>
             </x-tag>
             <x-tag>
-                {{$job->category}}
+                <a href="{{route('jobs.index', ['category' => $job->category, 'experience' => request('experience'),
+                'search' => request('search'), 'max_salary' => request('max_salary'), 'min_salary' => request('min_salary')])}}">
+                    {{$job->category}}
+                </a>
             </x-tag>
         </div>
     </div>

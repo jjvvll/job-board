@@ -33,19 +33,16 @@
 
             </div>
 
-            <button class="w-full">Filter</button>
+            <x-button class="w-full">Filter</x-button>
         </form>
     </x-card>
 
     @foreach ($jobs as $job)
         <x-job-card class="mb-4" :$job>
 
-           <div>
-            <a href="{{route('jobs.show', $job)}}"
-                class="rounded-md border border-slate-300 bg-white px-2.5 py-1.6 text-center text-sm font-semibold text-black shadow-sm hover:bg-slate-100">
+            <x-link-button :href="route('jobs.show', $job)">
                 View
-            </a>
-           </div>
+            </x-link-button>
 
         </x-job-card>
     @endforeach
