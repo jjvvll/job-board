@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Query\Builder as QueryBuilder;
 use PhpParser\Node\VarLikeIdentifier;
+use Illuminate\Auth\Authenticatable;
 
 class Job extends Model
 {
@@ -31,6 +32,13 @@ class Job extends Model
         return $this->hasMany(JobApplication::class);
     }
 
+    public function hasUserApplied(Authenticatable | User | int $user): bool{
+        return $this->where('id', $this->id)
+            ->whereHas('jobApplications',
+            fn($query) => $query->where('user_id', '=', $user->id ?? $user)
+        )->exists();
+
+    }
     public function scopeFilter(Builder | QueryBuilder $query, array $filters):Builder|QueryBuilder {
 
         return $query->when($filters['search'] ?? null, function ($query, $search){
