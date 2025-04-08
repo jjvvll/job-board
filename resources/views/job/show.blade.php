@@ -10,6 +10,11 @@
             <x-link-button :href="route('job.application.create', $job)">
                 Apply
             </x-link-button>
+        @elseif (empty(auth() -> user()->name))
+            <div class="text-center text-sm font-medium text-slate-500">
+
+                 You need to <a class="text-indigo-500 hover:underline" href=" {{route('auth.create')}}">sign in </a> to apply
+            </div>
         @else
             <div class="text-center text-sm font-medium text-slate-500">
                 You already applied to this job
