@@ -12,7 +12,8 @@ class label extends Component
      * Create a new component instance.
      */
     public function __construct(
-        public ?string $name = null
+        public ?string $for = null,
+        public ?bool $required = false
     )
     {
         //

@@ -13,12 +13,12 @@
         enctype="multipart/form-data">
             @csrf
             <div class="mb-4">
-                <x-label name="expected_salary">Expected Salary</x-label>
-                <x-text-input type="number" name="expected_salary"/>
+                <x-label for="expected_salary" :required="true">Expected Salary</x-label>
+                <x-text-input type="number" value="{{request('expected_salary')}}" name="expected_salary" />
             </div>
 
             <div class="mb-4">
-                <x-label name="cv">Upload CV</x-label>
+                <x-label for="cv" :required="true">Upload CV</x-label>
                 <x-text-input type="file" name="cv"></x-text-input>
             </div>
 
