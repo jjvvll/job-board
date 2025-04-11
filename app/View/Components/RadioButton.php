@@ -14,6 +14,8 @@ class RadioButton extends Component
     public function __construct(
         public array $options,
         public string $name,
+        public ?string $value=null,
+        public ?bool $allOption = true,
     )
     {
         //
