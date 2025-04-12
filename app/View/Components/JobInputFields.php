@@ -17,6 +17,7 @@ class JobInputFields extends Component
         public ?string $name = null,
         public ?string $fieldName = null,
         public ?string $type = null,
+        public ?string $value = null
     )
     {
         //
