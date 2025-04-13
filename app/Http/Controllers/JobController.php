@@ -4,16 +4,21 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Job;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 use function Laravel\Prompts\search;
 
 class JobController extends Controller
 {
+    use AuthorizesRequests;
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
+        $this->authorize('viewAny', Job::class);
+
         $filters=request()->only(
       'search',
             'min_salary',
@@ -47,6 +52,7 @@ class JobController extends Controller
      */
     public function show(Job $job)
     {
+        $this->authorize('view', $job);
         return view('job.show', ['job' => $job->load('employer.jobs')]);
 
     }
