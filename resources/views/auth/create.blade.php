@@ -1,8 +1,9 @@
 <x-layout>
+
+
     <h1 class="my-16 text-center text-4xl font-medium text-slate-600">
         Sign your account
     </h1>
-
 
     <x-card class="py-8 px-16">
         <form action="{{route('auth.store')}}" method="POST">
@@ -32,5 +33,11 @@
 
             <x-button class="w-full bg-green-50">Login</x-button>
         </form>
+
+        <div class="flex items-center justify-center mt-4 space-x-1">
+            <span>No account yet? Click </span>
+            <a class = "text-indigo-600 hover:underline" href="{{route('register.create')}}"> here </a>
+            <span> to register!</span>
+        </div>
     </x-card>
 </x-layout>

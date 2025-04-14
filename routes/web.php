@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\JobController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\MyJobApplicationsController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EmployerController;
@@ -18,6 +19,7 @@ Route::get('', fn() => to_route('jobs.index'));
 Route::resource('jobs', JobController::class)
     ->only(['index', 'show']);
 
+Route::resource('register', UserController::class);
 
 Route::get('login', fn() => to_route('auth.create'))->name('login');
 Route::resource('auth', AuthController::class)
