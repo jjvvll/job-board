@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Auth;
 
+use App\Http\Controllers\Controller;  // <-- This line is crucial
 use App\Models\user;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -19,7 +20,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('register.create');
+        return view('auth.create');
     }
 
     /**
@@ -28,12 +29,13 @@ class UserController extends Controller
     public function store(Request $request)
     {
 
-
          // Validation
         $validated = $request->validate([
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|min:6',
-            'name'=> 'required'
+            'password' => 'required|min:6|confirmed',
+            'name' => 'required'
+        ], [
+            'password.confirmed' => 'Passwords do not match.',
         ]);
 
         // Store in database

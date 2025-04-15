@@ -8,7 +8,15 @@
         <form action="{{route('register.store')}}" method="POST">
             @csrf
 
-            <div class="mb-8">
+            <x-job-input-fields for="name" name="name" :required="true" fieldName="Name" class="mb-4"/>
+
+            <x-job-input-fields for="email" name="email" :required="true" fieldName="E-mail" class="mb-8"/>
+
+            <x-job-input-fields for="password" name="password" :required="true" fieldName="Password"  type="password" class="mb-8"/>.
+
+            <x-job-input-fields for="password" name="password_confirmation" :required="true" fieldName="Password"  type="password" class="mb-8"/>
+
+            {{-- <div class="mb-8">
                 <x-label for="name" :required="true">Name</x-label>
                 <x-text-input name="name"/>
             </div>
@@ -23,9 +31,9 @@
                 <x-text-input name="password" type="password"/>
             </div>
 
-            {{-- <div class="mb-8">
-                <x-label for="confirmPassword" :required="true">Confirm Password</x-label>
-                <x-text-input name="confirmPassword" type="password"/>
+            <div class="mb-8">
+                <x-label for="password_confirmation" :required="true">Confirm Password</x-label>
+                <x-text-input name="password_confirmation" type="password"/>
             </div> --}}
 
             <x-button class="w-full bg-green-50">Register</x-button>
