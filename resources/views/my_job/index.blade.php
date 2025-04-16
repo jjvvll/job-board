@@ -5,25 +5,19 @@
         <x-link-button href="{{route('my-jobs.create')}}">Add new</x-link-button>
     </div>
 
+
     @forelse ($jobs as $job)
         <x-job-card :job="$job">
             <div class="text-xs text-slate-500">
-                @forelse ($job->jobApplications as $application)
-                    <div class="mb-4 flex items-center justify-between">
-                        <div>
-                            <div>{{$application->user->name}}</div>
-                            <div>Applied: {{$application->created_at->diffForHumans()}}</div>
-                            <div>Download CV</div>
-                        </div>
-                        <div>
-                            ${{number_format($application->expected_salary)}}
-                        </div>
-                    </div>
-                @empty
-                    <div>No applications yet</div>
-                @endforelse
+                <div>
+                    Number of Applications: {{$job->job_applications_count}}
+                </div>
 
                     @if (!$job->deleted_at)
+                        <div class="flex space-x-2 my-4">
+                            <x-link-button href="{{route('my-jobs.show', $job)}}">View</x-link-button>
+                        </div>
+
                         <div class="flex space-x-2 my-4">
                             <x-link-button href="{{route('my-jobs.edit', $job)}}">Edit</x-link-button>
                         </div>

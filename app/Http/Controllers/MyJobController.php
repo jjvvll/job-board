@@ -21,10 +21,22 @@ class MyJobController extends Controller
 
         $this->authorize('viewAnyEmployer', Job::class);
 
+        // return view('my_job.index', [
+        //     'jobs' => auth()->user()->employer()
+        //         ->with([
+        //             'job.employer',
+        //             'job.jobApplications',
+        //             'job.jobApplications.user',
+        //         ])
+        //         ->withCount('job.jobApplications')
+        //         ->get()
+        // ]);
+
+
         return view('my_job.index',[
             'jobs' => auth()->user()->employer
             ->jobs()
-            ->with(['employer', 'jobApplications', 'jobApplications.user'])
+            ->withCount('jobApplications')
             ->withTrashed()
             ->get()
         ]);
@@ -57,9 +69,11 @@ class MyJobController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Job $myJob)
     {
-        //
+        $myJob->load('jobApplications.user')->latest();
+
+        return view('my_job.view', ['job' => $myJob, ]);
     }
 
     /**

@@ -10,6 +10,7 @@ use App\Http\Controllers\MyJobController;
 use Database\Factories\EmployerFactory;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\Auth\CvController;
 use Illuminate\Support\Facades\Route;
 
 // Route::get('/', function () {
@@ -19,24 +20,24 @@ use Illuminate\Support\Facades\Route;
 Route::get('', fn() => to_route('jobs.index'));
 
 
-Route::get('forgot-password', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
-Route::post('forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+Route::get('forgot-password', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request')->middleware(\App\Http\Middleware\IfAuth::class);
+Route::post('forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email')->middleware(\App\Http\Middleware\IfAuth::class);
 
-Route::get('reset-password/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
-Route::post('reset-password', [ResetPasswordController::class, 'reset'])->name('password.update');
+Route::get('reset-password/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset')->middleware(\App\Http\Middleware\IfAuth::class);
+Route::post('reset-password', [ResetPasswordController::class, 'reset'])->name('password.update')->middleware(\App\Http\Middleware\IfAuth::class);
 
-Route::resource('jobs', JobController::class)
-    ->only(['index', 'show']);
-
-Route::resource('register', UserController::class);
+Route::resource('register', UserController::class)->middleware(\App\Http\Middleware\IfAuth::class);
 
 Route::get('login', fn() => to_route('auth.create'))->name('login');
 Route::resource('auth', AuthController::class)
-    ->only(['create', 'store'] );
+    ->only(['create', 'store'] )->middleware(\App\Http\Middleware\IfAuth::class);
 
 Route::get('logout', fn() => to_route('auth.destroy'))->name('logout');
 Route::delete('auth', [AuthController::class, 'destroy'])
     ->name('auth.destroy');
+
+Route::resource('jobs', JobController::class)
+    ->only(['index', 'show']);
 
 Route::middleware('auth')->group(function() {
     Route::resource('job.application', JobApplicationController::class)
@@ -49,4 +50,8 @@ Route::middleware('auth')->group(function() {
         ->only(['create', 'store']);
 
     Route::resource('my-jobs', MyJobController::class)->middleware(\App\Http\Middleware\Employer::class);
+
+    Route::get('/cv/{application}', [CvController::class, 'show'])
+    ->middleware(\App\Http\Middleware\Employer::class)
+    ->name('cv.view');
 });
