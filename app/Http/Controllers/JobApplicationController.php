@@ -97,4 +97,5 @@ class JobApplicationController extends Controller
     {
         //
     }
+
 }

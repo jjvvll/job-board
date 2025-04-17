@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('job_applications', function (Blueprint $table) {
-            $table->string('cv_name')->nullable(); // Add cv_name column
+            $table->string('status')->default('pending')->after('expected_salary');
         });
     }
 
@@ -22,7 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('job_applications', function (Blueprint $table) {
-            $table->dropColumn('cv_name');
+            $table->dropColumn('status');
 
         });
     }

@@ -46,8 +46,21 @@ Route::middleware('auth')->group(function() {
     Route::resource('my-job-applications', MyJobApplicationsController::class)
         ->only(['index', 'destroy']);
 
-    Route::resource('employer', EmployerController::class)
-        ->only(['create', 'store']);
+    // Custom route for jobStatus
+    Route::get('/my-job-applications/{myJobApplication}/status/{stat}', [MyJobApplicationsController::class, 'jobStatus'])
+    ->name('my-job-applications.jobStatus');
+
+    // Apply middleware only to 'create'
+    Route::get('employer/create', [EmployerController::class, 'create'])
+    ->middleware(\App\Http\Middleware\RedirectIfEmployer::class)
+    ->name('employer.create');
+
+    // No middleware on store
+    Route::post('employer', [EmployerController::class, 'store'])
+    ->name('employer.store');
+
+    // Route::resource('employer', EmployerController::class)
+    //     ->only(['create', 'store']);
 
     Route::resource('my-jobs', MyJobController::class)->middleware(\App\Http\Middleware\Employer::class);
 

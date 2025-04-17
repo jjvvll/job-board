@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
 
-class Employer
+class RedirectIfEmployer
 {
     /**
      * Handle an incoming request.
@@ -16,11 +16,13 @@ class Employer
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(null ===  $request->user() || (null === $request->user()->employer)){
-            return redirect()->route('employer.create')
-                ->with('error', 'You need to register as an employer first');
+
+        if ($request->user() && $request->user()->employer) {
+            // User is already an employer, redirect them
+            return redirect()->route('jobs.index')
+                ->with('error', 'You are already registered as an employer.');
         }
 
-        return $next($request); // let laravel do further action that it needs to do
+        return $next($request);
     }
 }

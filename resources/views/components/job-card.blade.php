@@ -15,6 +15,8 @@
                 <span class="text-xs text-red-500">Deleted</span>
             @endif
 
+
+
         </div>
         <div class="flex space-x-1 text-xs">
             <x-tag>

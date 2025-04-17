@@ -1,5 +1,5 @@
 <?php
-
+///FOR USER
 namespace App\Http\Controllers;
 
 use App\Models\JobApplication;
@@ -78,5 +78,13 @@ class MyJobApplicationsController extends Controller
             'success',
             'Job application removed.'
         );
+    }
+
+    public function jobStatus(JobApplication $myJobApplication, $stat)
+    {
+
+      $myJobApplication->update(['status' => $stat]);
+
+        return redirect()->back()->with('success', 'Application status updated.');
     }
 }

@@ -71,7 +71,7 @@ class MyJobController extends Controller
      */
     public function show(Job $myJob)
     {
-        $myJob->load('jobApplications.user')->latest();
+        $myJob->load(relations: 'jobApplications.user')->latest();
 
         return view('my_job.view', ['job' => $myJob, ]);
     }

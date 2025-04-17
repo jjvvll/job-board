@@ -13,6 +13,19 @@
                 <div>
                     ${{number_format($application->expected_salary)}}
                 </div>
+                <div>
+                    @if ($application->status === 'accept')
+                        <span class="text-xs text-green-500">Accepted</span>
+                    @elseif ($application->status === 'reject')
+                        <span class="text-xs text-red-500">Rejected</span>
+                    @else
+                        <span class="text-xs text-yellow-500">Pending</span>
+                    @endif
+                </div>
+                <div>
+                    <x-link-button href="{{ route('my-job-applications.jobStatus', ['myJobApplication' => $application->id, 'stat' => 'accept']) }}">Accept</x-link-button>
+                    <x-link-button href="{{ route('my-job-applications.jobStatus', ['myJobApplication' => $application->id, 'stat' => 'reject']) }}">Reject</x-link-button>
+                </div>
             </div>
         </x-card>
     @empty

@@ -10,7 +10,13 @@ class JobApplication extends Model
 {
     /** @use HasFactory<\Database\Factories\JobApplicationFactory> */
     use HasFactory;
-    protected $fillable = ['expected_salary', 'user_id', 'job_id' , 'cv_path', 'cv_name'];
+    protected $fillable = ['expected_salary', 'user_id', 'job_id' , 'cv_path', 'cv_name', 'status'];
+
+    public static array $status = [
+        'accepted',
+        'rejected',
+        'pending',
+    ];
 
     public function job(): BelongsTo {
         return $this->belongsTo(Job::class);
