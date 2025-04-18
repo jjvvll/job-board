@@ -12,10 +12,16 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\CvController;
 use Illuminate\Support\Facades\Route;
-
+use App\Events\TestBroadcast;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
+
+
+Route::get('/test-broadcast', function () {
+    broadcast(new TestBroadcast('Hello from Laravel Reverb!'));
+    return 'Broadcast sent!';
+});
 
 Route::get('', fn() => to_route('jobs.index'));
 
