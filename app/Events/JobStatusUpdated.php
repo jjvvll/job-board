@@ -8,10 +8,11 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class JobStatusUpdated implements ShouldBroadcast
+class JobStatusUpdated implements ShouldBroadcastNow
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
     public $jobApplication;
@@ -31,18 +32,21 @@ class JobStatusUpdated implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('job.application.' . $this->jobApplication->id);
+        return [
+            new Channel('test-channel')
+            // new PrivateChannel('job.application.' . $this->jobApplication->id);
+        ];
     }
 
 
     // Event data to broadcast
     public function broadcastWith()
     {
-        dd([
-            'status' => $this->jobApplication->status,
-            'applicationId' => $this->jobApplication->id,
-            'userId' => $this->jobApplication->user_id,
-        ]);
+        // dd([
+        //     'status' => $this->jobApplication->status,
+        //     'applicationId' => $this->jobApplication->id,
+        //     'userId' => $this->jobApplication->user_id,
+        // ]);
 
         return [
             'status' => $this->jobApplication->status,

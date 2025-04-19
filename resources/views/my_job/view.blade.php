@@ -1,5 +1,7 @@
 <x-layout>
+{{-- <div id="response">
 
+</div> --}}
     <x-breadcrumbs :links="['My Jobs' => '#', 'View Applications' => '#']" class="mb-4"/>
 
      @forelse ($job->jobApplications as $application)
@@ -23,11 +25,25 @@
                     @endif
                 </div>
                 <div>
-                    <x-link-button href="{{ route('my-job-applications.jobStatus', ['myJobApplication' => $application->id, 'stat' => 'accept']) }}">Accept</x-link-button>
+                    <x-link-button  data-application-id="{{ $application->id }}" href="{{ route('my-job-applications.jobStatus', ['myJobApplication' => $application->id, 'stat' => 'accept']) }}">Accept</x-link-button>
                     <x-link-button href="{{ route('my-job-applications.jobStatus', ['myJobApplication' => $application->id, 'stat' => 'reject']) }}">Reject</x-link-button>
                 </div>
             </div>
         </x-card>
+
+        <script type="module">
+            console.log(window.Echo);
+            window.Echo.channel('test-channel').listen('JobStatusUpdated', (event) =>{
+                console.log(event);
+                // const responseElement = document.querySelector('#response');
+
+                // responseElement.innerHTML+=`<div class="alert alert-info">Testing</div>`;
+            }).error((error) => {
+                console.error('Echo error:', error);
+            });
+
+        </script>
+
     @empty
         <div>No applications yet</div>
     @endforelse

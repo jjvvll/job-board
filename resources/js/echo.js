@@ -13,8 +13,14 @@ window.Echo = new Echo({
     enabledTransports: ['ws', 'wss'],
 });
 
-Echo.private('job.application.' + applicationId)
-    .listen('JobStatusUpdated', (event) => {
-        console.log(event);  // This should log the data from broadcastWith
-        // Handle the event data here (e.g., update the UI)
-    });
+
+    // Now you can trigger Echo broadcast or any other action
+    // Echo.private('job.application.' + applicationId)
+    //     .listen('JobStatusUpdated', (event) => {
+    //         console.log('Broadcast received!', event);
+    //     });
+
+    // console.log(event);  // This should log the data from broadcastWith
+    // // Handle the event data here (e.g., update the UI)ll
+
+    // Livewire.dispatch('job-status-updated', { jobId: e.jobApplication.id });

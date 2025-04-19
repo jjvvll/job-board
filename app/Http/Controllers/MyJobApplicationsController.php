@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\JobApplication;
 use App\Events\JobStatusUpdated;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Event;
+
 
 class MyJobApplicationsController extends Controller
 {
@@ -43,8 +45,9 @@ class MyJobApplicationsController extends Controller
       $myJobApplication->update(['status' => $stat]);
 
        // Fire the event
+        // event(args: new JobStatusUpdated($myJobApplication));
         event(new JobStatusUpdated($myJobApplication));
-
+        // Event::dispatch(new JobStatusUpdated($myJobApplication));
         // dd('Event emitted', $myJobApplication);
 
         return redirect()->back()->with('success', 'Application status updated.');

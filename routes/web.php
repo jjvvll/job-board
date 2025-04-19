@@ -12,14 +12,14 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\CvController;
 use Illuminate\Support\Facades\Route;
-use App\Events\TestBroadcast;
+use App\Events\JobStatusUpdated;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
 
 
 Route::get('/test-broadcast', function () {
-    broadcast(new TestBroadcast('Hello from Laravel Reverb!'));
+    broadcast(new JobStatusUpdated($jobApplication));
     return 'Broadcast sent!';
 });
 

@@ -6,7 +6,7 @@
 
         <title>Laravel Job Board</title>
         @vite(['resources/css/app.css', 'resources/js/app.js'])
-        @livewireStyles
+        {{-- @livewireStyles --}}
     </head>
     <body class = "mx-auto mt-10 max-w-2xl text-slate-700 bg-gradient-to-r from-indigo-100 from-10% via-sky-100 via-30% to-emerald-100 to-90%">
         <nav class="mb-8 flex justify-between text-lg font-medium">
@@ -56,6 +56,6 @@
 
         {{ $slot }}
 
-        @livewireScripts
+        {{-- @livewireScripts --}}
     </body>
 </html>
