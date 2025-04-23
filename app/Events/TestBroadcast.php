@@ -14,7 +14,6 @@ class TestBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-
     public $message;
 
     public function __construct($message)
@@ -22,21 +21,8 @@ class TestBroadcast
         $this->message = $message;
     }
 
-    /**
-     * Get the channels the event should broadcast on.
-     *
-     * @return array<int, \Illuminate\Broadcasting\Channel>
-     */
-    public function broadcastOn(): array
+    public function broadcastOn()
     {
-        return [
-            new PrivateChannel('test-channel'),
-        ];
-    }
-
-
-    public function broadcastAs(): string
-    {
-        return 'TestEvent'; // event name
+        return new Channel('test-channel'); // Broadcast to 'test-channel'
     }
 }

@@ -32,9 +32,10 @@ class JobStatusUpdated implements ShouldBroadcastNow
      */
     public function broadcastOn()
     {
+        // dd('job-verdict.' . $this->jobApplication->id. '.' .  $this->jobApplication->user->id);
         return [
-            new Channel('test-channel')
-            // new PrivateChannel('job.application.' . $this->jobApplication->id);
+            // new PrivaChannel('test-channel')
+            new PrivateChannel('job-verdict.' . $this->jobApplication->id. '.' .  $this->jobApplication->user->id)
         ];
     }
 
@@ -56,9 +57,9 @@ class JobStatusUpdated implements ShouldBroadcastNow
     }
 
     // Event name (optional)
-    public function broadcastAs()
-    {
-        return 'JobStatusUpdated';
-    }
+    // public function broadcastAs()
+    // {
+    //     return 'JobStatusUpdated';
+    // }
 
 }

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Broadcast;
+use App\Models\JobApplication;
 
 // Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
 //     return (int) $user->id === (int) $id;
@@ -16,6 +17,25 @@ use Illuminate\Support\Facades\Broadcast;
 // });
 
 
-Broadcast::channel('test-channel', function ($user, $id) {
-    return true;
+// Broadcast::channel('test-channel', function ($user, $id) {
+//     return true;
+// });
+
+// Broadcast::channel('job-verdict.{applicationId}.{userId}', function ($user, $applicationId, $userId) {
+//     return (int) $user->id === (int) $userId;
+// });
+
+// Broadcast::channel('job-verdict.{applicationId}.{userId}', function ($user, $applicationId, $userId) {
+//     return (int) $user->id === (int) $userId || ;
+// });
+
+
+Broadcast::channel('job-verdict.{applicationId}.{userId}', function ($user, $applicationId, $userId) {
+    $application = JobApplication::with('job.employer')->find($applicationId);
+
+    return $application &&
+           (
+               $user->id === (int) $userId || // Applicant
+               $application->job->employer->user_id === $user->id // Employer
+           );
 });

@@ -15,13 +15,9 @@
                     <div>Employer name: {{$application->job->employer->user->name}}</div>
 
 
-                    {{-- <livewire:job-status-updater :applicationId="$application->id" :status="$application->status" /> --}}
-                    <script type="module">
-                        console.log(window.Echo);
-                        window.Echo.channel('job-application').listen('JobStatusUpdated', (event) =>{
-                            console.log(event);
-                        });
-                    </script>
+
+                @livewire('job-status-updater', ['application' => $application], key($application->id))
+
 
 
                 </div>

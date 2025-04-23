@@ -13,15 +13,26 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\CvController;
 use Illuminate\Support\Facades\Route;
 use App\Events\JobStatusUpdated;
+use App\Events\TestBroadcast;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
 
+// Route::get('/trigger-test-event', function () {
+//     event(new TestBroadcast('Hello, this is a test message'));
+//     return 'Test event triggered!';
+// });
 
-Route::get('/test-broadcast', function () {
-    broadcast(new JobStatusUpdated($jobApplication));
-    return 'Broadcast sent!';
-});
+// Route::get('/test-broadcast', function () {
+//        $jobApplication = MyJobApplicationsController::find(1); // Use any valid ID from your DB
+
+//     if (!$jobApplication) {
+//         return 'Job application not found.';
+//     }
+
+//     broadcast(new JobStatusUpdated($jobApplication));
+//     return 'Broadcast sent!';
+// });
 
 Route::get('', fn() => to_route('jobs.index'));
 

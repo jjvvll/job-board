@@ -46,9 +46,12 @@ class MyJobApplicationsController extends Controller
 
        // Fire the event
         // event(args: new JobStatusUpdated($myJobApplication));
-        event(new JobStatusUpdated($myJobApplication));
+        // event(new JobStatusUpdated($myJobApplication));
         // Event::dispatch(new JobStatusUpdated($myJobApplication));
         // dd('Event emitted', $myJobApplication);
+
+        // broadcast(new JobStatusUpdated($myJobApplication));
+
 
         return redirect()->back()->with('success', 'Application status updated.');
     }

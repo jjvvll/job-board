@@ -3,40 +3,50 @@
 namespace App\Livewire;
 
 use Livewire\Component;
+use Livewire\Attributes\On;
+use App\Models\JobApplication;
+use App\Events\JobStatusUpdated;
+use Illuminate\Support\Facades\Auth;
 
 class JobStatusUpdater extends Component
 {
+    public $application;
     public $applicationId;
-    public $status;
 
-    // Listens for the event to update status
-    protected $listeners = ['job-status-updated' => 'updateStatus'];
+    public $userId;
 
-    // Mount method, which will initialize the component with applicationId and status
-    public function mount($applicationId, $status)
+    public function mount(JobApplication $application)
     {
-        $this->applicationId = $applicationId; // Fix this line, use applicationId here
-        $this->status = $status;
-
-        // dd('Inside Event:', $this->applicationId, $this->status);
+        $this->application = $application; // Bind the application
+        $this->applicationId = $application->id;
+        $this->userId = Auth::user()->id;
+        // dd("job-verdict".".".$this->applicationId.".".$this->userId);
     }
 
-    // Update the status when the event is triggered
-    public function updateStatus($data)
-    {
 
-        // dd('Inside Event:', $data['applicationId'], $data['status']);
-        // Now comparing with the applicationId
-        if ($this->applicationId == $data['applicationId']) { // i think this is from the listener
-            $this->status = $data['status'];
-
-            $this->emitSelf('statusUpdated');
-        }
-    }
-
-    // Render the Livewire view
     public function render()
     {
-        return view('livewire.job-status-updater');
+
+        if (  $this->application->job->employer->user->id === Auth::user()->id) {
+            return view('livewire.job-status-updater');
+        } else {
+            return view('livewire.employee-job-status-updater');
+        }
+
     }
+
+    public function changeStatus($status)
+    {
+        $this->application->status = $status;  // Update the status
+        $this->application->save();  // Save the changes
+
+        broadcast(new JobStatusUpdated( $this->application));
+    }
+
+    #[On('echo-private:job-verdict.{applicationId}.{userId},JobStatusUpdated')]
+    public function listenChangeStatus($event){
+       $this->render();
+    }
+
+
 }
