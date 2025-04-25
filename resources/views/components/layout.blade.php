@@ -54,6 +54,20 @@
             </div>
         @endif
 
+        <script type="module">
+            console.log(window.Echo);
+            window.Echo.channel('channel-newJobPosted').listen('NewJobPosted', ($event) =>{
+
+                if($event.user_id === {{ auth()->id() ?? 'null' }}){
+                      console.log('employer');
+                }else{
+                    alert("New job created");
+                }
+
+            })
+        </script>
+
+
         {{ $slot }}
 
         {{-- @livewireScripts --}}

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Job;
 use App\Http\Requests\JobRequest;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use App\Events\NewJobPosted;
 
 
 class MyJobController extends Controller
@@ -59,11 +60,12 @@ class MyJobController extends Controller
 
         $this->authorize('create', Job::class);
 
-        auth()->user()->employer->jobs()->create( $request->validated());
+        $newJob = auth()->user()->employer->jobs()->create( $request->validated());
+
+        broadcast(new NewJobPosted($newJob));
 
         return redirect()->route('my-jobs.index')
             ->with('success', 'Job successfully created');
-
     }
 
     /**

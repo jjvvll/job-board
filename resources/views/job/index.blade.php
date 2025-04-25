@@ -37,6 +37,12 @@
         </form>
     </x-card>
 
+
+
+    {{-- @foreach ($jobs as $job)
+        @livewire('new-job-posted', ['job' => $job], key($job->id))
+    @endforeach --}}
+
     @foreach ($jobs as $job)
         <x-job-card class="mb-4" :$job>
 
@@ -46,4 +52,7 @@
 
         </x-job-card>
     @endforeach
+
+
+
 </x-layout>
