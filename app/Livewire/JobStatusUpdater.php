@@ -5,8 +5,11 @@ namespace App\Livewire;
 use Livewire\Component;
 use Livewire\Attributes\On;
 use App\Models\JobApplication;
+use App\Models\User;
 use App\Events\JobStatusUpdated;
 use Illuminate\Support\Facades\Auth;
+use App\Notifications\JobStatusReminder;
+
 
 class JobStatusUpdater extends Component
 {
@@ -45,7 +48,17 @@ class JobStatusUpdater extends Component
 
     #[On('echo-private:job-verdict.{applicationId}.{userId},JobStatusUpdated')]
     public function listenChangeStatus($event){
-       $this->render();
+
+        if ($event['userId'] === $this->userId) {
+            $jobApplication = JobApplication::with('job.employer', 'user')
+                                ->find($event['applicationId']);
+
+            $user = $jobApplication->user;
+            $user->notify(new JobStatusReminder($jobApplication));
+        }
+
+        $this->render();
+
     }
 
 

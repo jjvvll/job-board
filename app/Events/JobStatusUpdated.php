@@ -49,10 +49,20 @@ class JobStatusUpdated implements ShouldBroadcastNow
         //     'userId' => $this->jobApplication->user_id,
         // ]);
 
+
+
         return [
-            'status' => $this->jobApplication->status,
+            // 'status' => $this->jobApplication->status,
+            // 'applicationId' => $this->jobApplication->id,
+            // 'userId' => $this->jobApplication->user_id,
+
             'applicationId' => $this->jobApplication->id,
             'userId' => $this->jobApplication->user_id,
+            'applicant_name' => $this->jobApplication->user->name,
+            'job_title' => $this->jobApplication->job->title,
+            'job_status' => $this->jobApplication->status,
+            'company_name' => $this->jobApplication->job->employer->company_name,
+            'job_employer' => $this->jobApplication->job->employer->user->id
         ];
     }
 
