@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Job;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use App\Events\SomeoneAppliedToYourJob;
 
 
 class JobApplicationController extends Controller
@@ -54,6 +55,9 @@ class JobApplicationController extends Controller
             'cv_path' => $path,
             'cv_name' => $cvName
         ]);
+
+
+        broadcast(new SomeoneAppliedToYourJob($job));
 
         return redirect()->route('jobs.show', $job)
             ->with('success', 'Job Application submitted.');
