@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Job;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use App\Events\SomeoneAppliedToYourJob;
+use App\Events\SomeoneAppliedToYourJobEvent;
 
 
 class JobApplicationController extends Controller
@@ -49,15 +49,16 @@ class JobApplicationController extends Controller
 
         $path = $file->storeAs('cvs', $cvName, 'private');
 
-        $job->jobApplications()->create([
+        $jobApplication = $job->jobApplications()->create([
             'user_id' => $request->user()->id,
             'expected_salary' => $validatedData['expected_salary'],
             'cv_path' => $path,
             'cv_name' => $cvName
         ]);
 
+        // SomeoneAppliedToYourJobEvent::dispatch($jobApplication);
 
-        broadcast(new SomeoneAppliedToYourJob($job));
+        // broadcast(new SomeoneAppliedToYourJob($jobApplication));
 
         return redirect()->route('jobs.show', $job)
             ->with('success', 'Job Application submitted.');

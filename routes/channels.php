@@ -44,3 +44,11 @@ Broadcast::channel('job-verdict.{applicationId}.{userId}', function ($user, $app
 
            //why both employer and applicant needed to hear this channel? the applicant is the only one who needs to listen
 });
+
+
+Broadcast::channel('channel-SomeoneAppliedToYourJob.{applicationId}.{employerId}', function ($user, $applicationId, $employerId) {
+    $application = JobApplication::with('job.employer')->find($applicationId);
+
+     return $application && $user->id === (int) $employerId;
+
+});

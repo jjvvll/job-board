@@ -9,21 +9,17 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
-use App\Models\JobApplication;
 
-
-class SomeoneAppliedToYourJob
+class NewApplication
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     /**
      * Create a new event instance.
      */
-    public $jobApplication;
-
-    public function __construct(JobApplication $jobApplication)
+    public function __construct()
     {
-        $this->jobApplication = $jobApplication;
+        //
     }
 
     /**
@@ -34,7 +30,7 @@ class SomeoneAppliedToYourJob
     public function broadcastOn(): array
     {
         return [
-            new PrivateChannel('channel-SomeoneAppliedToYourJob'. $this->jobApplication->employer->user->id),
+            new PrivateChannel('channel-name'),
         ];
     }
 }
