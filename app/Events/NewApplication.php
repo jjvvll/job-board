@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Models\JobApplication;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -9,17 +10,17 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 
-class NewApplication
+class NewApplication implements ShouldBroadcastNow
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    /**
-     * Create a new event instance.
-     */
-    public function __construct()
+    public $jobApplication;
+
+    public function __construct(JobApplication $jobApplication)
     {
-        //
+        $this->jobApplication = $jobApplication;
     }
 
     /**
@@ -30,7 +31,13 @@ class NewApplication
     public function broadcastOn(): array
     {
         return [
-            new PrivateChannel('channel-name'),
+            new PrivateChannel('channel-newApplication.'.$this->jobApplication->job->employer->user->id),
+        ];
+    }
+
+    public function broadcastWith(){
+        return[
+            'application_id' => $this->jobApplication->id
         ];
     }
 }

@@ -3,6 +3,7 @@
     :links="['Jobs' => route('jobs.index')]"/>
 
     <x-card class="mb-4 text-sm" x-data="">
+        {{-- #id ="filtering-form" find what this is for--}}
         <form x-ref="filters" id ="filtering-form" action="{{route('jobs.index')}}" method="GET">
             <div class="mb-4 grid grid-cols-2 gap-4" >
 

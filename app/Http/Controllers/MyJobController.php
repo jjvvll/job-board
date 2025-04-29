@@ -17,12 +17,13 @@ class MyJobController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
 
         $this->authorize('viewAnyEmployer', Job::class);
 
         // return view('my_job.index', [
+
         //     'jobs' => auth()->user()->employer()
         //         ->with([
         //             'job.employer',
@@ -34,13 +35,34 @@ class MyJobController extends Controller
         // ]);
 
 
-        return view('my_job.index',[
-            'jobs' => auth()->user()->employer
-            ->jobs()
-            ->withCount('jobApplications')
-            ->withTrashed()
-            ->get()
+
+        return view('my_job.index', [
+            'jobs' =>  auth()->user()->employer // Correct relationship name
+                ->jobs()
+                ->when($request->input('search'), function ($query, $search) {
+                    $query->whereHas('jobApplications', function ($query) use ($search) {
+                        $query->whereHas('job', function ($query) use ($search) {
+                            $query->where('title', 'like', '%' . $search . '%')
+                                ->orWhere('description', 'like', '%' . $search . '%');
+                        });
+                    });
+                })
+                ->withCount('jobApplications')
+                ->withTrashed()
+                ->get()
         ]);
+
+
+
+
+
+        // return view('my_job.index',[
+        //     'jobs' => auth()->user()->employer
+        //     ->jobs()
+        //     ->withCount('jobApplications')
+        //     ->withTrashed()
+        //     ->get()
+        // ]);
     }
 
     /**

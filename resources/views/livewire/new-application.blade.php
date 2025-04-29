@@ -1,5 +1,5 @@
 <div>
-    @forelse ($job->jobApplications as $application)
+    @forelse ($applications as $application)
     <x-card class="mb-4">
         <div class="mb-4 flex items-center justify-between">
             <div>

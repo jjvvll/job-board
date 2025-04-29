@@ -1,6 +1,15 @@
 <x-layout>
     <x-breadcrumbs :links="['My Jobs' => '#', 'Create' => '#']" class="mb-4"/>
 
+        <form x-ref="search" id ="filtering-form" action="{{route('my-jobs.index')}}" method="GET">
+            <div>
+                {{-- <div class="mb-1 font-semibold">Search</div> --}}
+                <x-text-input name="search" value="{{request('search')}}" placeholder="Search for any job posted" form-ref="search"/>
+            </div>
+
+            <x-button class="mb-5">Search</x-button>
+        </form>
+
     <div class="mb-8 text-right" >
         <x-link-button href="{{route('my-jobs.create')}}">Add new</x-link-button>
     </div>

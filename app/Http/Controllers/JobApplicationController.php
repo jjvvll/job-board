@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Job;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use App\Events\SomeoneAppliedToYourJobEvent;
+use App\Events\NewApplication;
 
 
 class JobApplicationController extends Controller
@@ -58,7 +58,7 @@ class JobApplicationController extends Controller
 
         // SomeoneAppliedToYourJobEvent::dispatch($jobApplication);
 
-        // broadcast(new SomeoneAppliedToYourJob($jobApplication));
+        broadcast(new NewApplication($jobApplication));
 
         return redirect()->route('jobs.show', $job)
             ->with('success', 'Job Application submitted.');

@@ -46,9 +46,9 @@ Broadcast::channel('job-verdict.{applicationId}.{userId}', function ($user, $app
 });
 
 
-Broadcast::channel('channel-SomeoneAppliedToYourJob.{applicationId}.{employerId}', function ($user, $applicationId, $employerId) {
-    $application = JobApplication::with('job.employer')->find($applicationId);
+Broadcast::channel('channel-newApplication.{employerId}', function ($user, $employerId) {
+    // $application = JobApplication::with('job.employer')->find($applicationId);
 
-     return $application && $user->id === (int) $employerId;
+     return $user->id === (int) $employerId;
 
 });
