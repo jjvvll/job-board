@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\JobApplication;
+use App\Notifications\JobStatusReminder;
 use App\Events\JobStatusUpdated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Event;
@@ -39,20 +40,30 @@ class MyJobApplicationsController extends Controller
         );
     }
 
-    public function jobStatus(JobApplication $myJobApplication, $stat)
-    {
+    // public function jobStatus(JobApplication $myJobApplication, $stat)
+    // {
 
-      $myJobApplication->update(['status' => $stat]);
+    //   $myJobApplication->update(['status' => $stat]);
 
-       // Fire the event
-        // event(args: new JobStatusUpdated($myJobApplication));
-        // event(new JobStatusUpdated($myJobApplication));
-        // Event::dispatch(new JobStatusUpdated($myJobApplication));
-        // dd('Event emitted', $myJobApplication);
+    //   if ($myJobApplication-> === auth()->user()->id) {
+    //     dd('i am here');
+    //     $jobApplication = JobApplication::with('job.employer', 'user')
+    //                         ->find($myJobApplication->id);
 
-        // broadcast(new JobStatusUpdated($myJobApplication));
+    //     $user = $jobApplication->user;
+    //     $user->notify(new JobStatusReminder($jobApplication));
+    // }
 
 
-        return redirect()->back()->with('success', 'Application status updated.');
-    }
+    //    // Fire the event
+    //     // event(args: new JobStatusUpdated($myJobApplication));
+    //     // event(new JobStatusUpdated($myJobApplication));
+    //     // Event::dispatch(new JobStatusUpdated($myJobApplication));
+    //     // dd('Event emitted', $myJobApplication);
+
+    //     // broadcast(new JobStatusUpdated($myJobApplication));
+
+
+    //     return redirect()->back()->with('success', 'Application status updated.');
+    // }
 }

@@ -52,3 +52,4 @@ Broadcast::channel('channel-newApplication.{employerId}', function ($user, $empl
      return $user->id === (int) $employerId;
 
 });
+

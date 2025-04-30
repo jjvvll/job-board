@@ -84,7 +84,9 @@ class MyJobController extends Controller
 
         $newJob = auth()->user()->employer->jobs()->create( $request->validated());
 
-        broadcast(new NewJobPosted($newJob));
+        // broadcast(event: new NewJobPosted($newJob));
+        event(new NewJobPosted($newJob)); // Laravel will broadcast automatically if your event implements ShouldBroadcast, so in most cases, this alone is enough:
+
 
         return redirect()->route('my-jobs.index')
             ->with('success', 'Job successfully created');

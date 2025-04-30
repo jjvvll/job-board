@@ -5,3 +5,5 @@ import './bootstrap';
 //         console.log('Broadcast received:', e.message);
 //         alert('Received: ' + e.message);
 //     });
+
+// resources/js/app.js

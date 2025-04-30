@@ -43,19 +43,21 @@ class JobStatusUpdater extends Component
         $this->application->status = $status;  // Update the status
         $this->application->save();  // Save the changes
 
-        broadcast(new JobStatusUpdated( $this->application));
+        event(new JobStatusUpdated($this->application)); // Laravel will broadcast automatically if your event implements ShouldBroadcast, so in most cases, this alone is enough:
+
+        // broadcast(event: new JobStatusUpdated( $this->application));
     }
 
     #[On('echo-private:job-verdict.{applicationId}.{userId},JobStatusUpdated')]
     public function listenChangeStatus($event){
 
-        if ($event['userId'] === $this->userId) {
-            $jobApplication = JobApplication::with('job.employer', 'user')
-                                ->find($event['applicationId']);
+        // if ($event['userId'] === $this->userId) {
+        //     $jobApplication = JobApplication::with('job.employer', 'user')
+        //                         ->find($event['applicationId']);
 
-            $user = $jobApplication->user;
-            $user->notify(new JobStatusReminder($jobApplication));
-        }
+        //     $user = $jobApplication->user;
+        //     $user->notify(new JobStatusReminder(jobApplication: $jobApplication));
+        // }
 
         $this->render();
 

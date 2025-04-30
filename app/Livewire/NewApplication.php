@@ -19,7 +19,7 @@ class NewApplication extends Component
         // $this->job =  $job;
 
         $this->applications = $job->jobApplications;
-        $this->employerId = $job->employer->user->id;
+        $this->employerId = auth()->user()->id;
     }
     public function render()
     {
