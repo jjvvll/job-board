@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Models\JobApplication;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Computed;
+use function Livewire\dispatch;
 
 class NotificationPopup extends Component
 {
@@ -16,7 +17,7 @@ class NotificationPopup extends Component
 
     public function mount()
     {
-        $this->employerId = auth()->user()->id; // Get the authenticated user's ID
+        $this->employerId = auth()->user()->id ?? 0; // Get the authenticated user's ID
         // $this->testing();
     }
 
@@ -42,15 +43,24 @@ class NotificationPopup extends Component
         $jobApplication = JobApplication::with('job.employer', 'user')
         ->find($event['application_id']);
 
-        $this->title = 'Applicant:'.$jobApplication->user->name ?? 'Notification';
-        $this->body = 'Position applied for:'.$jobApplication->job->title ?? 'You have a new notification.';
+        $this->title = 'Applicant: '.$jobApplication->user->name ?? 'Notification';
+        $this->body = 'Position applied for: '.$jobApplication->job->title ?? 'You have a new notification.';
 
         // Show the notification popup
         $this->show = true;
 
+        $this->dispatch('showSweetAlert', [
+            'title' => 'Success!',
+            'text' => $this->title . ' successfully applied to ' . $this->body,
+            'icon' => 'success'
+        ]);
        //Auto-hide the popup after 5 seconds (optional)
         // $this->dispatchBrowserEvent('hide-popup', ['delay' => 5000]);
 
+    }
+    public function hidePopup()
+    {
+        $this->show = false;
     }
 
 
