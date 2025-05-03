@@ -135,4 +135,17 @@ class MyJobController extends Controller
         return redirect()->route('my-jobs.index')
             ->with('success', 'Job deleted.');
     }
+
+    public function bulkDelete(Request $request)
+    {
+        $request->validate([
+            'jobs' => 'required|array',
+            'jobs.*' => 'exists:jobs,id'
+        ]);
+
+        Job::whereIn('id', $request->jobs)->delete(); // Soft delete
+
+        return redirect()->route('my-jobs.index')
+        ->with('success', 'Selected jobs deleted.');
+    }
 }

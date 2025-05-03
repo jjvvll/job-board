@@ -84,4 +84,8 @@ Route::middleware('auth')->group(function() {
     Route::get('/cv/{application}', [CvController::class, 'show'])
     ->middleware(\App\Http\Middleware\Employer::class)
     ->name('cv.view');
+
+    Route::post('/jobs/bulk-delete', [MyJobController::class, 'bulkDelete'])->middleware(\App\Http\Middleware\Employer::class)
+    ->name('jobs.bulk.delete');
+
 });
