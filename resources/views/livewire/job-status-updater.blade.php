@@ -6,7 +6,6 @@
     @else
         <span class="text-xs text-yellow-500">Pending</span>
     @endif
-
     <script>
         window.applicationId = @json($application->id);
         window.userId = @json($application->user->id);

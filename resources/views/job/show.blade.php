@@ -12,8 +12,11 @@
             </x-link-button>
         @elseif (empty(auth() -> user()->name))
             <div class="text-center text-sm font-medium text-slate-500">
-
                  You need to <a class="text-indigo-500 hover:underline" href=" {{route('auth.create')}}">sign in </a> to apply
+            </div>
+        @elseif (auth()->user()->id === $job->employer->user->id)
+            <div class="text-center text-sm font-medium text-slate-500">
+                 You are seeing this job as an applicant.
             </div>
         @else
             <div class="text-center text-sm font-medium text-slate-500">

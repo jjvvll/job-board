@@ -32,7 +32,10 @@ class NewApplication extends Component
         $jobApplication = JobApplication::with('job.employer', 'user')
         ->find($event['application_id']);
 
-        $this->applications = $this->applications->push($jobApplication);
+        if($jobApplication ){
+            $this->applications = $this->applications->push($jobApplication);
+
+        }
 
        $this->render();
     }

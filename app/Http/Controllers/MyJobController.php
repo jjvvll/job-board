@@ -40,11 +40,9 @@ class MyJobController extends Controller
             'jobs' =>  auth()->user()->employer // Correct relationship name
                 ->jobs()
                 ->when($request->input('search'), function ($query, $search) {
-                    $query->whereHas('jobApplications', function ($query) use ($search) {
-                        $query->whereHas('job', function ($query) use ($search) {
-                            $query->where('title', 'like', '%' . $search . '%')
-                                ->orWhere('description', 'like', '%' . $search . '%');
-                        });
+                    $query->where(function($q) use ($search) {
+                        $q->where('title', 'like', '%'.$search.'%')
+                          ->orWhere('description', 'like', '%'.$search.'%');
                     });
                 })
                 ->withCount('jobApplications')

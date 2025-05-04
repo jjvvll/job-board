@@ -1,14 +1,16 @@
 <x-layout>
     <x-breadcrumbs :links="['My Jobs' => '#', 'Create' => '#']" class="mb-4"/>
+        <div class="mb-4 text-sm" x-data="">
+            <form x-ref="my-job-filter" id ="filtering-form" action="{{route('my-jobs.index')}}" method="GET">
+                <div>
+                    {{-- <div class="mb-1 font-semibold">Search</div> --}}
+                    <x-text-input name="search" value="{{request('search')}}" placeholder="Search for any job posted" form-ref="my-job-filter"/>
+                </div>
 
-        <form x-ref="search" id ="filtering-form" action="{{route('my-jobs.index')}}" method="GET">
-            <div>
-                {{-- <div class="mb-1 font-semibold">Search</div> --}}
-                <x-text-input name="search" value="{{request('search')}}" placeholder="Search for any job posted" form-ref="search"/>
-            </div>
+                <x-button class="mb-5">Search</x-button>
+            </form>
+        </div>
 
-            <x-button class="mb-5">Search</x-button>
-        </form>
 
     <div class="mb-8 text-right" >
         <x-link-button href="{{route('my-jobs.create')}}">Add new</x-link-button>
@@ -41,7 +43,10 @@
                     @if (!$job->deleted_at)
                         <div class="flex space-x-2 my-4">
                             <x-link-button href="{{ route('my-jobs.show', $job) }}">View</x-link-button>
-                            <x-link-button href="{{ route('my-jobs.edit', $job) }}">Edit</x-link-button>
+
+                            @if($job->job_applications_count === 0)
+                                <x-link-button href="{{ route('my-jobs.edit', $job) }}">Edit</x-link-button>
+                            @endif
 
                             <!-- Individual Delete Form (always visible) -->
                             <form action="{{ route('my-jobs.destroy', $job) }}" method="POST" class="inline">

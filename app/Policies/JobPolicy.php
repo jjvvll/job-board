@@ -80,7 +80,7 @@ class JobPolicy
     }
 
     public function apply(User $user, Job $job):bool {
-        return !$job->hasUserApplied($user);
+        return (!$job->hasUserApplied($user)) && ($user->id !== $job->employer->user->id);
     }
 }
 

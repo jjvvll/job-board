@@ -43,17 +43,19 @@ class NotificationPopup extends Component
         $jobApplication = JobApplication::with('job.employer', 'user')
         ->find($event['application_id']);
 
-        $this->title = 'Applicant: '.$jobApplication->user->name ?? 'Notification';
-        $this->body = 'Position applied for: '.$jobApplication->job->title ?? 'You have a new notification.';
+        if($jobApplication){
+            $this->title = 'Applicant: '.$jobApplication->user->name ?? 'Notification';
+            $this->body = 'Position applied for: '.$jobApplication->job->title ?? 'You have a new notification.';
 
-        // Show the notification popup
-        $this->show = true;
+            // Show the notification popup
+            $this->show = true;
 
-        $this->dispatch('showSweetAlert', [
-            'title' => 'Success!',
-            'text' => $this->title . ' successfully applied to ' . $this->body,
-            'icon' => 'success'
-        ]);
+            $this->dispatch('showSweetAlert', [
+                'title' => 'Success!',
+                'text' => $this->title . ' successfully applied to ' . $this->body,
+                'icon' => 'success'
+            ]);
+        }
        //Auto-hide the popup after 5 seconds (optional)
         // $this->dispatchBrowserEvent('hide-popup', ['delay' => 5000]);
 

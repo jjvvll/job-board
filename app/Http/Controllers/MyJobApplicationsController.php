@@ -7,6 +7,8 @@ use App\Notifications\JobStatusReminder;
 use App\Events\JobStatusUpdated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Event;
+use App\Events\NewApplication;
+
 
 
 class MyJobApplicationsController extends Controller
@@ -33,6 +35,8 @@ class MyJobApplicationsController extends Controller
     public function destroy(JobApplication $myJobApplication)
     {
         $myJobApplication->delete();
+
+        broadcast(new NewApplication($myJobApplication));
 
         return redirect()->back()->with(
             'success',
