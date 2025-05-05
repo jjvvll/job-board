@@ -19,7 +19,6 @@
                 @livewire('job-status-updater', ['application' => $application], key($application->id))
 
 
-
                 </div>
                 <div>
                     <form action="{{route('my-job-applications.destroy', $application)}}" method="POST">

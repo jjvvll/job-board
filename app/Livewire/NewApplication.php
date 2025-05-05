@@ -16,10 +16,10 @@ class NewApplication extends Component
     public $employerId;
 
     public function mount(Job $job){
-        // $this->job =  $job;
+        $this->job =  $job;
 
-        $this->applications = $job->jobApplications;
-        $this->employerId =  $job->employer->user->id;
+        $this->applications = $this->job->jobApplications()->withTrashed()->get();
+       $this->employerId =  $job->employer->user->id;
 
     }
     public function render()
@@ -29,14 +29,22 @@ class NewApplication extends Component
 
     #[On('echo-private:channel-newApplication.{employerId},NewApplication')]
     public function listenStatus($event){
-        $jobApplication = JobApplication::with('job.employer', 'user')
-        ->find($event['application_id']);
+        // $jobApplication = JobApplication::with('job.employer', 'user')
+        // ->find($event['application_id']);
 
-        if($jobApplication ){
-            $this->applications = $this->applications->push($jobApplication);
+        // if($jobApplication ){
+        //        $this->applications = $this->applications->push($jobApplication);
 
-        }
+        // }else{
 
-       $this->render();
+        //     $this->applications = $this->applications->reject(function ($app) use ($event) {
+        //     return $app->id == $event['application_id'];
+        //     });
+        // }
+        $this->applications = $this->job->jobApplications()->withTrashed()->get();
+
+
+        // dd(vars: $this->applications);
+
     }
 }

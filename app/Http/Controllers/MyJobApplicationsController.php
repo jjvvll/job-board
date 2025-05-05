@@ -34,6 +34,7 @@ class MyJobApplicationsController extends Controller
     }
     public function destroy(JobApplication $myJobApplication)
     {
+
         $myJobApplication->delete();
 
         broadcast(new NewApplication($myJobApplication));
