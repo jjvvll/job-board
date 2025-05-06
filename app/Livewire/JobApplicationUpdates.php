@@ -19,7 +19,7 @@ class JobApplicationUpdates extends Component
 
 
     public ?int $applicationId = 0;
-    public $userId;
+    public ?int $userId;
 
     public function mount( $model)
     {
@@ -71,7 +71,10 @@ class JobApplicationUpdates extends Component
 
     public function render()
     {
-
-            return view('livewire.job-application-updates');
+            if (  $this->job) {
+                return view('livewire.job-application-updates');
+            } else {
+                return view('livewire.employee-job-status-updater');
+            }
     }
 }

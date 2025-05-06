@@ -1,4 +1,4 @@
-<div>
+{{-- <div>
     @forelse ($applications as $application)
     <x-card class="mb-4">
         <div class="mb-4 flex items-center justify-between">
@@ -19,7 +19,7 @@
                         <span class="text-xs text-red-500">Rejected</span>
                     @else
                         <span class="text-xs text-yellow-500">Pending</span>
-                    @endif {{-- This closes the $application->status check --}}
+                    @endif
 
                     <x-button wire:click="changeStatus('accept')">Accept</x-button>
                     <x-button wire:click="changeStatus('reject')">Reject</x-button>
@@ -37,4 +37,4 @@
         <div>No applications yet</div>
     @endforelse
 </div>
-
+ --}}

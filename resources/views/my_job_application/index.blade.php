@@ -16,7 +16,7 @@
 
 
 
-                @livewire('job-status-updater', ['application' => $application], key($application->id))
+                @livewire('job-application-updates', ['model' => $application], key($application->id))
 
 
                 </div>

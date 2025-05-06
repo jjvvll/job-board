@@ -33,14 +33,14 @@ use App\Models\JobApplication;
 Broadcast::channel('job-verdict.{applicationId}.{userId}', function ($user, $applicationId, $userId) {
     $application = JobApplication::with('job.employer')->find($applicationId);
 
-    // return $application &&
-    //        (
-    //            $user->id === (int) $userId || // Applicant
-    //            $application->job->employer->user_id === $user->id // Employer
-    //        );
+    return $application &&
+           (
+               $user->id === (int) $userId || // Applicant
+               $application->job->employer->user_id === $user->id // Employer
+           );
 
      // Only the applicant should listen for the event
-     return $application && $user->id === (int) $userId;
+    //  return $application && $user->id === (int) $userId;
 
            //why both employer and applicant needed to hear this channel? the applicant is the only one who needs to listen
 });
